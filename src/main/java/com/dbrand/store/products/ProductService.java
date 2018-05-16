@@ -5,19 +5,26 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
 
+	@Autowired
+	private ProductRepository productRepository;
+	
 	List<Product> products = new ArrayList<>(Arrays.asList(
-			new Product("Phone","Electronic",1,"Used for making calls"),
-			new Product("Nutrabullet","Kitchen Appliance",2,"Helps in kitchen work"),
-			new Product("Laptop","Electronic",3,"Used for browsing")
+			new Product("Phone","Electronic","Used for making calls"),
+			new Product("Nutrabullet","Kitchen Appliance","Helps in kitchen work"),
+			new Product("Laptop","Electronic","Used for browsing")
 			));
 	
 	public List<Product> getAllProducts(){
-		return products;
+		
+		 List<Product> productList= new ArrayList<>();
+		 productRepository.findAll().forEach(productList :: add);
+		 return productList;
 	}
 	
 //	public List<Product> getProduct(String param){
@@ -45,7 +52,7 @@ public class ProductService {
 	
 	public void addProduct(Product product){
 	
-		products.add(product);
+		productRepository.save(product);
 	}
 
 	

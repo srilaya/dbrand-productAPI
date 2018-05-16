@@ -2,15 +2,22 @@ package com.dbrand.store.products;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Product {
 
 	private static final AtomicInteger count = new AtomicInteger(0); 
-	private long id;
+	
+	@Id
+	private Long id;
 	private String name;
 	private String type;
 	private String description;
 	
 	public Product() {	
+		id = Long.valueOf(count.incrementAndGet());
 	}
 	
 	public Product(String name, String type, String description) {
@@ -18,7 +25,7 @@ public class Product {
 		this.name = name;
 		this.type = type;
 		this.description = description;
-		id = count.incrementAndGet();
+		
 	}
 	
 	public String getName() {
@@ -34,9 +41,7 @@ public class Product {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public long getId() {
-		return id;
-	}
+	
 	
 	public String getDescription() {
 		return description;
