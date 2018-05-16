@@ -11,13 +11,14 @@ public class Product {
 	private static final AtomicInteger count = new AtomicInteger(0); 
 	
 	@Id
-	private Long id;
+	private long id;
 	private String name;
 	private String type;
 	private String description;
 	
 	public Product() {	
-		id = Long.valueOf(count.incrementAndGet());
+		//id = Long.valueOf(count.incrementAndGet());
+		id = count.incrementAndGet();
 	}
 	
 	public Product(String name, String type, String description) {
@@ -49,5 +50,11 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public long getId() {
+		return id;
+	}
+
+
 	
 }

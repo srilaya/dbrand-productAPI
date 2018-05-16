@@ -22,10 +22,10 @@ public class ProductController {
 	}
 	
 	//* Return list of products by type
-	@RequestMapping(method= RequestMethod.GET, value = "/products/{param}")
-	public List<Product> getProduct(@PathVariable String param){	
+	@RequestMapping(method= RequestMethod.GET, value = "/products/{type}")
+	public List<Product> getProductByType(@PathVariable String type){	
 		
-		return productService.getProductByType(param);
+		return productService.getProductByType(type);
 	}
 	
 	@RequestMapping(method= RequestMethod.POST, value = "/products")

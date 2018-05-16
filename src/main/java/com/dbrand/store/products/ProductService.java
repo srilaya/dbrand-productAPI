@@ -3,6 +3,7 @@ package com.dbrand.store.products;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,56 +14,56 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-	
-	List<Product> products = new ArrayList<>(Arrays.asList(
-			new Product("Phone","Electronic","Used for making calls"),
-			new Product("Nutrabullet","Kitchen Appliance","Helps in kitchen work"),
-			new Product("Laptop","Electronic","Used for browsing")
-			));
-	
-	public List<Product> getAllProducts(){
-		
-		 List<Product> productList= new ArrayList<>();
-		 productRepository.findAll().forEach(productList :: add);
-		 return productList;
+
+	// get all products in the repo
+	public List<Product> getAllProducts() {
+
+		List<Product> productList = new ArrayList<>();
+		productRepository.findAll().forEach(productList::add);
+		return productList;
 	}
-	
-//	public List<Product> getProduct(String param){
-//		
-//		if(products.contains( products.stream().filter( p -> p.getType().equals(param)))){
-//			getProductByType(param);
-//		}else{
-//			getProductByName(param);
-//		}
-//	}
-	
-	public List<Product> getProductByType(String type){
-		
-		return products.stream()
-				 	   .filter( p-> p.getType().equals(type))
-				 	   .collect(Collectors.toList());
-	}
-	
+
+	// returns just one product by name;
+	// Assuming it will only return first product it finds with this name
 	public Product getProductByName(String name) {
-		return products.stream()
-					   .filter(p -> p.getName().equals(name))
-					   .findFirst().get();	
+
+		List<Product> productList = new ArrayList<>();
+		productRepository.findAll().forEach(p -> {
+			if (p.getName().equals(name)) {
+				productList.add(p);
+			}
+		});
+		
+		return productList.stream().findFirst().get();
 	}
-	
-	
-	public void addProduct(Product product){
-	
+
+	// get product by type
+	public List<Product> getProductByType(String type) {
+
+		List<Product> productList = new ArrayList<>();
+		productRepository.findAll().forEach(p -> {
+			if (p.getType().equals(type)) {
+				productList.add(p);
+			}
+		});
+		return productList;
+
+	}
+
+	// adds new product
+	public void addProduct(Product product) {
+
 		productRepository.save(product);
 	}
 
-	
+	// deletes product
 	public void deleteProduct(String name) {
-		 	
-		products.removeIf( p-> p.getName().equals(name) );
-		
+
+		productRepository.findAll().forEach(p -> {
+			if (p.getName().equals(name)) {
+				productRepository.deleteById(p.getId());
+			}
+		});
 	}
 
-	
-	
-	
 }
