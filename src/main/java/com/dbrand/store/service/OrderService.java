@@ -1,4 +1,4 @@
-package com.dbrand.store.orders;
+package com.dbrand.store.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.dbrand.store.products.Product;
+import com.dbrand.store.DAO.OrderRepository;
+import com.dbrand.store.model.Product;
 
 @Service
 public class OrderService {

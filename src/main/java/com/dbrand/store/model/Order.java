@@ -1,12 +1,10 @@
-package com.dbrand.store.orders;
+package com.dbrand.store.model;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import com.dbrand.store.products.Product;
 
 //@Entity
 public class Order {

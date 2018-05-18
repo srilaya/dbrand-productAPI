@@ -1,4 +1,4 @@
-package com.dbrand.store.products;
+package com.dbrand.store.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.dbrand.store.DAO.ProductRepository;
+import com.dbrand.store.model.Product;
 
 @Service
 public class ProductService {

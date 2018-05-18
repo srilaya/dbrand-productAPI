@@ -1,4 +1,4 @@
-package com.dbrand.store.products;
+package com.dbrand.store.model;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

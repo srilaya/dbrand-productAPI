@@ -1,4 +1,4 @@
-package com.dbrand.store.orders;
+package com.dbrand.store.controller;
 
 import java.util.List;
 
@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dbrand.store.products.Product;
+import com.dbrand.store.model.Product;
+import com.dbrand.store.service.OrderService;
 
 @RestController
 public class OrderController {

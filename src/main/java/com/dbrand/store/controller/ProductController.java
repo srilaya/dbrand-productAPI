@@ -1,4 +1,4 @@
-package com.dbrand.store.products;
+package com.dbrand.store.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.dbrand.store.model.Product;
+import com.dbrand.store.service.ProductService;
 
 
 @RestController
