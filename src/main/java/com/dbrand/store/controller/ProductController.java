@@ -29,12 +29,8 @@ public class ProductController {
 	
 	//* Return list of products by type
 	@RequestMapping(method= RequestMethod.GET, value = "/products/{type}")
-	public List<Product> getProductByType(@PathVariable String type) throws ProductServiceException{	
-		
-		if(productService.getProductByType(type)==null){
-			throw new ProductServiceException();
-		}
-		
+	public List<Product> getProductByType(@PathVariable String type) {	
+		 		
 		return productService.getProductByType(type);
 	}
 	
