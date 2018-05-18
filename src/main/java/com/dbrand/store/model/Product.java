@@ -15,14 +15,10 @@ public class Product {
 	private String name;
 	private String type;
 	private String description;
-	private int quantity;
+	private static final int quantity = 10;
 
 	public int getQuantity() {
 		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 
 	public Product() {
@@ -30,13 +26,11 @@ public class Product {
 		id = count.incrementAndGet();
 	}
 
+	public Product(String name, String type, String description) {
 
-	public Product(String name, String type, String description, int quantity) {
-		
 		this.name = name;
 		this.type = type;
 		this.description = description;
-		this.quantity = quantity;
 	}
 
 	public String getName() {

@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dbrand.store.DAO.ProductRepository;
+
+import com.dbrand.store.exception.DataNotFoundException;
+import com.dbrand.store.exception.DataNotFoundExceptionHandler;
 import com.dbrand.store.model.Product;
 
 @Service
@@ -31,11 +34,18 @@ public class ProductService {
 	public Product getProductByName(String name) {
 
 		List<Product> productList = new ArrayList<>();
+		
+	try{
 		productRepository.findAll().forEach(p -> {
 			if (p.getName().equals(name)) {
 				productList.add(p);
 			}
 		});
+	}catch(DataNotFoundException d){
+		DataNotFoundExceptionHandler dh = new DataNotFoundExceptionHandler();
+		dh.exceptionOccurred(d);
+	}
+		
 		
 		return productList.stream().findFirst().get();
 	}
@@ -49,6 +59,11 @@ public class ProductService {
 				productList.add(p);
 			}
 		});
+		
+		if(productList.size()==0){
+			throw new DataNotFoundException("Sorry. Product type --> "+ type +": Not found in our catalog !");
+		}
+		
 		return productList;
 
 	}
