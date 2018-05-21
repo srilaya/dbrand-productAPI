@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dbrand.store.DAO.ProductRepository;
-
+import com.dbrand.store.exception.ProductDoesNotExistException;
+import com.dbrand.store.exception.ProductExistsException;
+import com.dbrand.store.exception.ProductServiceException;
 import com.dbrand.store.model.Product;
 
 @Service
@@ -32,53 +34,67 @@ public class ProductService {
 	public Product getProductByName(String name) {
 
 		List<Product> productList = new ArrayList<>();
-		
-	try{
-		productRepository.findAll().forEach(p -> {
-			if (p.getName().equals(name)) {
-				productList.add(p);
-			}
-		});
-	}catch(Exception d){
-		
-	}
-		
-		
+
+		try {
+			productRepository.findAll().forEach(p -> {
+				if (p.getName().equals(name)) {
+					productList.add(p);
+				}
+			});
+		} catch (Exception e) {
+				e.printStackTrace();
+		}
+
 		return productList.stream().findFirst().get();
 	}
 
 	// get product by type
-	public List<Product> getProductByType(String type) {
+	public List<Product> getProductByType(String type) throws Exception {
 
 		List<Product> productList = new ArrayList<>();
+		if (productList.size() == 0) {
+			throw new ProductServiceException(404, "No Such type exists. Please review your request. ");
+		}
+
 		productRepository.findAll().forEach(p -> {
 			if (p.getType().equals(type)) {
 				productList.add(p);
 			}
 		});
-		
-		if(productList.size()==0){
-			//throw new DataNotFoundException("Sorry. Product type --> "+ type +": Not found in our catalog !");
-		}
-		
-		return productList;
 
+		return productList;
+	}
+
+	// searches for a product by its ID 
+	public Optional<Product> getProductById(long id) throws ProductServiceException {
+
+		if (!productRepository.existsById(id)) {
+			throw new ProductServiceException(404, "This ID does not exist");
+		}
+
+		return productRepository.findById(id);
 	}
 
 	// adds new product
-	public void addProduct(Product product) {
-
-		productRepository.save(product);
+	public void addProduct(Product product) throws ProductExistsException {
+		
+		Optional<Product> p = productRepository.findById(product.getId()); 
+		if(p.isPresent()){
+			throw new ProductExistsException(500, "This Product already exists !");
+		}
+			
+		productRepository.save(product);			
 	}
 
-	// deletes product
-	public void deleteProduct(String name) {
+	// deletes a product from the repo
+	public void deleteProduct(long id) throws ProductDoesNotExistException {
 
-		productRepository.findAll().forEach(p -> {
-			if (p.getName().equals(name)) {
-				productRepository.deleteById(p.getId());
-			}
-		});
+		Optional<Product> p = productRepository.findById(id);
+		if (p.isPresent()) {
+			productRepository.deleteById(id);
+		} else {
+			throw new ProductDoesNotExistException();
+		}
 	}
 
 }

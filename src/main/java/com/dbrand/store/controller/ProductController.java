@@ -1,7 +1,11 @@
 package com.dbrand.store.controller;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,39 +17,37 @@ import com.dbrand.store.exception.ResourceNotFoundException;
 import com.dbrand.store.model.Product;
 import com.dbrand.store.service.ProductService;
 
-
 @RestController
 public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
-	//* Retrieve a list of products
+
+	// * Retrieve a list of products
 	@RequestMapping("/products")
 	public List<Product> getProducts() {
+
+		return productService.getAllProducts();
+	}
+
+	// * Return list of products by type
+	@RequestMapping(method = RequestMethod.GET, value = "/products/{id}")
+	public Optional<Product> getProductById(@PathVariable long id) throws Exception{
 		
-			return productService.getAllProducts();	
+		return productService.getProductById(id);
 	}
 	
-	//* Return list of products by type
-	@RequestMapping(method= RequestMethod.GET, value = "/products/{type}")
-	public List<Product> getProductByType(@PathVariable String type) {	
-		 		
-		return productService.getProductByType(type);
-	}
-	
-	@RequestMapping(method= RequestMethod.POST, value = "/products")
-	public void addProduct(@RequestBody Product product){	
-		
+	// Add a new product into the repo
+	@RequestMapping(method = RequestMethod.POST, value = "/products")
+	public void addProduct(@RequestBody Product product) throws Exception  {
+			
 		productService.addProduct(product);
-	}		
-		
-	//* Delete an item
-	@RequestMapping(method= RequestMethod.DELETE, value = "/products/{name}")
-	public void deleteProduct(@PathVariable String name){	
-		
-		productService.deleteProduct(name);
 	}
-	
-	
+
+	// * Delete an item
+	@RequestMapping(method = RequestMethod.DELETE, value = "/products/{id}")
+	public void deleteProduct(@PathVariable long id) throws Exception {
+		
+		productService.deleteProduct(id);
+	}
 }

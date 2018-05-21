@@ -1,6 +1,6 @@
 package com.dbrand.store.exception;
 
-public class ProductServiceException extends Exception {
+public class ProductDoesNotExistException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -8,13 +8,13 @@ public class ProductServiceException extends Exception {
 	String errorMessage;
 	
 
-	public ProductServiceException() {
+	public ProductDoesNotExistException() {
 		super();
 		
 	}
 
 
-	public ProductServiceException(int code, String errorMessage) {
+	public ProductDoesNotExistException(int code, String errorMessage) {
 		super();
 		this.code = code;
 		this.errorMessage = errorMessage;

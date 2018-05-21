@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Product {
 
-	private static final AtomicInteger count = new AtomicInteger(0);
+	//private static final AtomicInteger count = new AtomicInteger(0);
 
 	@Id
 	private long id; // Auto-generating ID as this is the primary key
@@ -22,12 +22,11 @@ public class Product {
 	}
 
 	public Product() {
-		// id = Long.valueOf(count.incrementAndGet());
-		id = count.incrementAndGet();
 	}
 
-	public Product(String name, String type, String description) {
-
+	public Product(long id, String name, String type, String description) {
+		
+		this.id = id;
 		this.name = name;
 		this.type = type;
 		this.description = description;
@@ -59,6 +58,10 @@ public class Product {
 
 	public long getId() {
 		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }
