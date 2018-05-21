@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class CustomExceptionHandler  {
@@ -33,5 +34,16 @@ public class CustomExceptionHandler  {
 
 		return new ExceptionResponse(500,"The product you want to delete , does NOT exists in the Database! ",request.getRequestURI());
 	}
+	
+	@ExceptionHandler(Exception.class)
+	public @ResponseBody ExceptionResponse handleError(HttpServletRequest request, Exception e)   {
+	        return new ExceptionResponse(100,"There was an unknown exception! ",request.getRequestURI());
+	}
+
+	@ExceptionHandler(NoHandlerFoundException.class)
+	public @ResponseBody ExceptionResponse handleError404(HttpServletRequest request, Exception e)   {
+		return new ExceptionResponse(404,"This request source was not found in the application ! ",request.getRequestURI());
+	}
+	
 
 }
