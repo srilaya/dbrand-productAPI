@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name="Product")
 public class Product {
 
 	//private static final AtomicInteger count = new AtomicInteger(0);

@@ -49,7 +49,7 @@ public class ProductService {
 	}
 
 	// get product by type
-	public List<Product> getProductByType(String type) throws Exception {
+	public List<Product> getProductByType(String type) throws ProductServiceException {
 
 		List<Product> productList = new ArrayList<>();
 		if (productList.size() == 0) {
